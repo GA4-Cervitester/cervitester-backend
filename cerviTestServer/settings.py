@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'chat',
     'request',
     'rest_framework_simplejwt',
-    'corsheaders'
+    'corsheaders',
+    "anymail"
 ]
 
 MIDDLEWARE = [
@@ -153,8 +154,18 @@ SIMPLE_JWT = {
 }
 
 # Mail settings
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
-SENDGRID_API_KEY = "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"
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# SENDGRID_API_KEY = "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"
+
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": "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",
+    "SEND_DEFAULTS": {
+        "tags": ["app"]
+    },
+    "DEBUG_API_REQUESTS": DEBUG,
+}
+EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+# DEFAULT_FROM_EMAIL = "<your email address>"
 
 django_heroku.settings(locals())

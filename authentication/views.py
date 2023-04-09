@@ -31,7 +31,7 @@ def RegisterView(request, type):
                     phoneNumber=phoneNumber)
                 patient.save()
                 refresh = RefreshToken.for_user(user)
-                send_mail('Welcome to Cervi-Tester', 'Welcome to cervi-tester app', 'suyashsonawane005@gmail.com',
+                send_mail('Welcome to Cervi-Tester', 'Welcome to cervi-tester app', 'domain.cervitester@gmail.com',
                           [email],  fail_silently=False,)
                 return response.Response({"message": serializer.data, 'token': str(refresh.access_token)}, status=status.HTTP_200_OK)
             except utils.IntegrityError as ex:
@@ -58,7 +58,7 @@ def RegisterView(request, type):
                     user=user,
                     phoneNumber=phoneNumber)
                 doctor.save()
-                send_mail('Welcome Doctor to Cervi-Tester', 'Welcome to cervi-tester app, your account will be reviewed by our admin and you will receive once it is approved', 'suyashsonawane005@gmail.com',
+                send_mail('Welcome Doctor to Cervi-Tester', 'Welcome to cervi-tester app, your account will be reviewed by our admin and you will receive once it is approved', 'domain.cervitester@gmail.com',
                           [email],  fail_silently=False,)
                 return response.Response({"message": serializer.data}, status=status.HTTP_200_OK)
             except utils.IntegrityError as ex:
