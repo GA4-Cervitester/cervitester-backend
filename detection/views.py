@@ -42,12 +42,12 @@ def OperatorView(request):
         image_result.write(image_64_decode)
         storage.child(f"/record-annotations/{ts}").put("image.jpg")
         url = storage.child(f"/record-annotations/{ts}").get_url(None)
-        model_result,model_version = runDetection()
+        model_result, model_version = runDetection()
         record = Record(
             patient=request.user.patient,
             photoUri=url,
             modelVersion=model_version,
-            modelFeedback=True if model_result == [0.] else False
+            modelFeedback=True if model_result[0] > model_result[1] else False
         )
         record.save()
         record_serializer = RecordSerializer(instance=record)
@@ -65,7 +65,7 @@ def OperatorView(request):
         image_result.write(image_64_decode)
         storage.child(f"/record-annotations/{ts}").put("image.jpg")
         url = storage.child(f"/record-annotations/{ts}").get_url(None)
-        model_result,model_version = runDetection()
+        model_result, model_version = runDetection()
         chat = Chat(patient=patient, doctor=request.user.doctor)
         chat.save()
         record = Record(
@@ -73,7 +73,7 @@ def OperatorView(request):
             doctor=request.user.doctor,
             photoUri=url,
             modelVersion=model_version,
-            modelFeedback=True if model_result == 0 else False,
+            modelFeedback=True if model_result[0] > model_result[1] else False,
             chat=chat
         )
         record.save()

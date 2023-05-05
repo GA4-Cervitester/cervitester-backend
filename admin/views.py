@@ -51,7 +51,7 @@ def GetDataView(request):
     doctors = Doctor.objects.all().values()
     records = RecordSerializer(Record.objects.all(), many=True).data
     models = Model.objects.all().values()
-    return response.Response({'patients': patients, 'doctors': doctors, 'records': records,'models':models})
+    return response.Response({'patients': patients, 'doctors': doctors, 'records': records, 'models': models})
 
 
 @api_view(['POST'])
@@ -65,7 +65,7 @@ def VerifyDoctor(request):
         doctor = Doctor.objects.get(pk=id)
         doctor.isVerified = True
         doctor.save()
-        send_mail('Account Verified', 'Greeting, we have successfully verified your account you can processed to log into your account.', 'suyashsonawane005@gmail.com',
+        send_mail('Account Verified', 'Greetings, we have successfully verified your account you can processed to log into your account.', 'domain.cervitester@gmail.com',
                   [doctor.email],  fail_silently=False,)
         return response.Response({'message': 'doctor verified'}, status=status.HTTP_200_OK)
     except Admin.DoesNotExist:
@@ -121,24 +121,25 @@ def AddModelView(request):
         return response.Response({'error': 'not allowed'}, status=status.HTTP_401_UNAUTHORIZED)
     model_id = request.data.get('model_id')
     active = request.data.get('active')
-    
+
     if model_id is None:
         return response.Response({'error': 'model_id is required'}, status=status.HTTP_400_BAD_REQUEST)
     active = False if active is None else active
-    model = Model(model_id=model_id,active=active)
+    model = Model(model_id=model_id, active=active)
     try:
         model.save()
     except utils.IntegrityError as e:
         return response.Response({'error': 'model_id already exists'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    if(model.active):
+
+    if (model.active):
         for m in Model.objects.filter(active=True):
             if m.model_id == model_id:
                 continue
             m.active = False
             m.save()
-    
+
     return response.Response({'message': 'model added successfully'}, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -146,15 +147,14 @@ def SetActiveModelView(request):
     if getUserType(request.user) != "admin":
         return response.Response({'error': 'not allowed'}, status=status.HTTP_401_UNAUTHORIZED)
     model_id = request.data.get('model_id')
-    
+
     if model_id is None:
         return response.Response({'error': 'model_id is required'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+
     for m in Model.objects.filter(active=True):
         m.active = False
         m.save()
-        
+
     try:
         model = Model.objects.get(model_id=model_id)
         model.active = True
@@ -162,6 +162,4 @@ def SetActiveModelView(request):
     except Model.DoesNotExist:
         return response.Response({'error': 'model does not exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-    
     return response.Response({'message': 'active model updated successfully'}, status=status.HTTP_200_OK)
-        
