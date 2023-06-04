@@ -42,13 +42,19 @@ def OperatorView(request):
         image_result.write(image_64_decode)
         storage.child(f"/record-annotations/{ts}").put("image.jpg")
         url = storage.child(f"/record-annotations/{ts}").get_url(None)
-        model_result, model_version = runDetection()
+        normal_Count, rounded_ratio, abnormal_Count = runDetection()
+        # modelFeedback = normal count , model_version = rounded ratio
+
         record = Record(
             patient=request.user.patient,
             photoUri=url,
-            modelVersion=model_version,
-            modelFeedback=True if model_result[0] > model_result[1] else False
+            # modelFeedback=True if modelFeedback[0] > modelFeedback[1] else False
+            # modelFeedback=modelFeedback,
+            normalCount=normal_Count,
+            roundedRatio=rounded_ratio,
+            abnormalCount=abnormal_Count
         )
+        print(record)
         record.save()
         record_serializer = RecordSerializer(instance=record)
         # detectionThread = threading.Thread(target=runDetection)
@@ -65,15 +71,17 @@ def OperatorView(request):
         image_result.write(image_64_decode)
         storage.child(f"/record-annotations/{ts}").put("image.jpg")
         url = storage.child(f"/record-annotations/{ts}").get_url(None)
-        model_result, model_version = runDetection()
+        # model_result, model_version = runDetection()
+        normal_Count, rounded_ratio, abnormal_Count = runDetection()
         chat = Chat(patient=patient, doctor=request.user.doctor)
         chat.save()
         record = Record(
             patient=patient,
             doctor=request.user.doctor,
             photoUri=url,
-            modelVersion=model_version,
-            modelFeedback=True if model_result[0] > model_result[1] else False,
+            normalCount=normal_Count,
+            roundedRatio=rounded_ratio,
+            abnormalCount=abnormal_Count,
             chat=chat
         )
         record.save()

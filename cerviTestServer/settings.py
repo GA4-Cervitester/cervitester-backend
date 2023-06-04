@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 import os
 import django_heroku
+# from django.core.servers.basehttp import WSGIServer
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,11 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+l+nul&4+o6&oog=k3y^qb(!8&^2)qx9t1_(1uqd75cz@+fav6'
+# SECRET_KEY = 'django-insecure-+l+nul&4+o6&oog=k3y^qb(!8&^2)qx9t1_(1uqd75cz@+fav6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = 'django-insecure-+l+nul&4+o6&oog=k3y^qb(!8&^2)qx9t1_(1uqd75cz@+fav6'
 
+DEBUG = True
+if os.getcwd() == '/app':
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
@@ -82,6 +86,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cerviTestServer.wsgi.application'
+
+# Suppress broken pipe errors
+
+# WSGIServer.handle_error = lambda *args, **kwargs: None
 
 
 # Database
@@ -168,4 +176,35 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 # DEFAULT_FROM_EMAIL = "<your email address>"
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
+# Miscellaneous patch code
+
+
+# def patch_broken_pipe_error():
+#     """Monkey Patch BaseServer.handle_error to not write
+#     a stacktrace to stderr on broken pipe.
+#     http://stackoverflow.com/a/22618740/362702"""
+#     import sys
+#     from socketserver import BaseServer
+#     from wsgiref import handlers
+
+#     handle_error = BaseServer.handle_error
+#     log_exception = handlers.BaseHandler.log_exception
+
+#     def is_broken_pipe_error():
+#         type, err, tb = sys.exc_info()
+#         return repr(err) == "error(32, 'Broken pipe')"
+
+#     def my_handle_error(self, request, client_address):
+#         if not is_broken_pipe_error():
+#             handle_error(self, request, client_address)
+
+#     def my_log_exception(self, exc_info):
+#         if not is_broken_pipe_error():
+#             log_exception(self, exc_info)
+
+#     BaseServer = my_handle_error
+#     handlers.BaseHandler.log_exception = my_log_exception
+
+
+# patch_broken_pipe_error()

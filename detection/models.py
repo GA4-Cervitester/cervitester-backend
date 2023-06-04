@@ -18,9 +18,13 @@ class Record(models.Model):
     chat = models.ForeignKey(Chat, on_delete=DO_NOTHING, null=True)
     modelFeedback = models.BooleanField(null=True)
     modelVersion = models.CharField(max_length=20)
+    normalCount = models.FloatField(null=True)
+    roundedRatio = models.FloatField(null=True)
+    abnormalCount = models.FloatField(null=True)
+
 
 class Model(models.Model):
     createdTs = models.DateTimeField(auto_now_add=True)
     updatedTs = models.DateTimeField(auto_now=True)
-    model_id = models.CharField(max_length=20,unique=True)
+    model_id = models.CharField(max_length=20, unique=True)
     active = models.BooleanField(default=False)
