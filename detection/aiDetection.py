@@ -3,6 +3,7 @@ import torch
 from tensorflow.python.keras.backend import argmax
 from keras.applications.resnet import preprocess_input
 from detection.models import Model
+from keras.models import load_model
 
 import tensorflow as tf
 import numpy as np
@@ -34,37 +35,43 @@ def manual_preprocess():
     return x.reshape((1, *x.shape))
 
 
-def runDetection():
-    model = loadModel()
-    # model = tf.keras.models.load_model(f'models/{version}.h5')
-    # img = load_img('image.jpg', target_size=(224, 224, 3))
-    # img = manual_preprocess()
-    img = load_img('image.jpg', target_size=(224, 224))
-    # img_array = img_to_array(img)
-    # img_array = np.expand_dims(img_array, 0)
-    results = model(img)
-    # print(result)
-    # return [result, version]
-    # Ratio calculation
+def runDetection(testType):
+    if (testType == "0"):
+        model = loadModel()
+        # model = tf.keras.models.load_model(f'models/{version}.h5')
+        # img = load_img('image.jpg', target_size=(224, 224, 3))
+        # img = manual_preprocess()
+        img = load_img('image.jpg', target_size=(224, 224))
+        # img_array = img_to_array(img)
+        # img_array = np.expand_dims(img_array, 0)
+        results = model(img)
+        # print(result)
+        # return [result, version]
+        # Ratio calculation
 
-    detections = results.pandas().xyxy[0]
-    num_detections = len(detections)
-    detected_classes = detections['name'].tolist()
+        detections = results.pandas().xyxy[0]
+        num_detections = len(detections)
+        detected_classes = detections['name'].tolist()
 
-    normal = 'Negative for intraepithelial lesion'
-    normal_count = 0
-    for i in detected_classes:
-        if i == normal:
-            normal_count += 1
+        normal = 'Negative for intraepithelial lesion'
+        normal_count = 0
+        for i in detected_classes:
+            if i == normal:
+                normal_count += 1
 
-    ratio = normal_count / num_detections
-    rounded_ratio = round(ratio, 4)
-    percentage = rounded_ratio * 100
-    abnormal_count = num_detections-normal_count
+        ratio = normal_count / num_detections
+        rounded_ratio = round(ratio, 4)
+        percentage = rounded_ratio * 100
+        abnormal_count = num_detections-normal_count
 
-    print(f"Number of normal cells: {normal_count}")
-    print(f"Ratio of normal to abnormal cells: {rounded_ratio}")
-    print(f"Percentage: {percentage}")
-    results.print()
-    results.show()
-    return [normal_count, rounded_ratio, abnormal_count]
+        print(f"Number of normal cells: {normal_count}")
+        print(f"Ratio of normal to abnormal cells: {rounded_ratio}")
+        print(f"Percentage: {percentage}")
+        results.print()
+        results.show()
+        return [normal_count, rounded_ratio, abnormal_count]
+    elif (testType == "1"):
+        img = manual_preprocess()
+        model = load_model(f'models/colpo.h5')
+        prediction = model.predict(img)
+        return prediction[0]

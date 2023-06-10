@@ -15,6 +15,30 @@ from authentication.models import Patient
 from chat.models import Chat
 
 
+# def pretty_request(request):
+#     headers = ''
+#     for header, value in request.META.items():
+#         if not header.startswith('HTTP'):
+#             continue
+#         header = '-'.join([h.capitalize()
+#                           for h in header[5:].lower().split('_')])
+#         headers += '{}: {}\n'.format(header, value)
+
+#     return (
+#         '{method} HTTP/1.1\n'
+#         'Content-Length: {content_length}\n'
+#         'Content-Type: {content_type}\n'
+#         '{headers}\n\n'
+#         '{body}'
+#     ).format(
+#         method=request.method,
+#         content_length=request.META['CONTENT_LENGTH'],
+#         content_type=request.META['CONTENT_TYPE'],
+#         headers=headers,
+#         body=request.body,
+#     )
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def FileUploadView(request):
@@ -42,21 +66,38 @@ def OperatorView(request):
         image_result.write(image_64_decode)
         storage.child(f"/record-annotations/{ts}").put("image.jpg")
         url = storage.child(f"/record-annotations/{ts}").get_url(None)
-        normal_Count, rounded_ratio, abnormal_Count = runDetection()
-        # modelFeedback = normal count , model_version = rounded ratio
+        if (request.data.get('test_type') == "0"):
+            normal_Count, rounded_ratio, abnormal_Count = runDetection(
+                request.data.get('test_type'))
+            # modelFeedback = normal count , model_version = rounded ratio
 
-        record = Record(
-            patient=request.user.patient,
-            photoUri=url,
-            # modelFeedback=True if modelFeedback[0] > modelFeedback[1] else False
-            # modelFeedback=modelFeedback,
-            normalCount=normal_Count,
-            roundedRatio=rounded_ratio,
-            abnormalCount=abnormal_Count
-        )
-        print(record)
-        record.save()
-        record_serializer = RecordSerializer(instance=record)
+            record = Record(
+                patient=request.user.patient,
+                photoUri=url,
+                # modelFeedback=True if modelFeedback[0] > modelFeedback[1] else False
+                # modelFeedback=modelFeedback,
+                normalCount=normal_Count,
+                roundedRatio=rounded_ratio,
+                abnormalCount=abnormal_Count
+            )
+            # printable = pretty_request(request)
+            print(record)
+            testtype = request.data.get('test_type')
+            print(testtype)
+            record.save()
+            record_serializer = RecordSerializer(instance=record)
+        elif (request.data.get('test_type') == "1"):
+            resultArray = runDetection(request.data.get('test_type'))
+
+            record = Record(
+                patient=request.user.patient,
+                photoUri=url,
+                modelFeedback=True if resultArray[0] > resultArray[1] else False
+                # modelFeedback=modelFeedback,
+            )
+            record.save()
+            record_serializer = RecordSerializer(instance=record)
+
         # detectionThread = threading.Thread(target=runDetection)
         # detectionThread.start()
         return response.Response({"record": record_serializer.data}, status=status.HTTP_200_OK)
