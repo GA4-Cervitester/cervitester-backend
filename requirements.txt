@@ -55,3 +55,4 @@ pillow
 django-cors-headers
 django-sendgrid-v5
 mediafire-dl @ git+https://github.com/Juvenal-Yescas/mediafire-dl@c73fe1e76632e6f9f51ed8167b4562ab1cfe03f7
+torch
