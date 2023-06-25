@@ -50,6 +50,7 @@ wincertstore==0.2
 gunicorn
 django-heroku
 tensorflow-cpu==2.8.0
+django-anymail
 pillow
 django-cors-headers
 django-sendgrid-v5
