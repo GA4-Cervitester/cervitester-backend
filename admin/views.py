@@ -65,8 +65,8 @@ def VerifyDoctor(request):
         doctor = Doctor.objects.get(pk=id)
         doctor.isVerified = True
         doctor.save()
-        send_mail('Account Verified', 'Greetings, we have successfully verified your account you can processed to log into your account.', 'domain.cervitester@gmail.com',
-                  [doctor.email],  fail_silently=False,)
+        # send_mail('Account Verified', 'Greetings, we have successfully verified your account you can processed to log into your account.', 'domain.cervitester@gmail.com',
+        #           [doctor.email],  fail_silently=False,)
         return response.Response({'message': 'doctor verified'}, status=status.HTTP_200_OK)
     except Admin.DoesNotExist:
         return response.Response({'error': 'not allowed'}, status=status.HTTP_401_UNAUTHORIZED)
