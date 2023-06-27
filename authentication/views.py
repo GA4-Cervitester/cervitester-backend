@@ -6,7 +6,7 @@ from rest_framework import response, status
 from authentication.serializers import DoctorSerializer, PatientSerializer
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 from .models import Doctor, Patient
 from helpers import getUserType
 
@@ -31,8 +31,8 @@ def RegisterView(request, type):
                     phoneNumber=phoneNumber)
                 patient.save()
                 refresh = RefreshToken.for_user(user)
-                send_mail('Welcome to Cervi-Tester', 'Welcome to cervi-tester app', 'domain.cervitester@gmail.com',
-                          [email],  fail_silently=False,)
+                # send_mail('Welcome to Cervi-Tester', 'Welcome to cervi-tester app', 'domain.cervitester@gmail.com',
+                #           [email],  fail_silently=False,)
                 return response.Response({"message": serializer.data, 'token': str(refresh.access_token)}, status=status.HTTP_200_OK)
             except utils.IntegrityError as ex:
                 print(ex)
@@ -58,8 +58,8 @@ def RegisterView(request, type):
                     user=user,
                     phoneNumber=phoneNumber)
                 doctor.save()
-                send_mail('Welcome Doctor to Cervi-Tester', 'Welcome to cervi-tester app, your account will be reviewed by our admin and you will receive once it is approved', 'domain.cervitester@gmail.com',
-                          [email],  fail_silently=False,)
+                # send_mail('Welcome Doctor to Cervi-Tester', 'Welcome to cervi-tester app, your account will be reviewed by our admin and you will receive once it is approved', 'domain.cervitester@gmail.com',
+                #           [email],  fail_silently=False,)
                 return response.Response({"message": serializer.data}, status=status.HTTP_200_OK)
             except utils.IntegrityError as ex:
                 return response.Response({"error": "User already exists"}, status=status.HTTP_400_BAD_REQUEST)
