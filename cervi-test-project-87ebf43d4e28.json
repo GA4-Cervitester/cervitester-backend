@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cervi-test-project",
+  "private_key_id": "87ebf43d4e289e519f9903789319d7b4c5a0dba9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4oxEGO1dm7H7P\nkAGkoEXC7IO33BlFmS/KqlZ8VVBENKJU1FxG/QNN9y1hc2bfLL5G+vo14ANVjLBA\nZB5cY0pXi84Mw9iez+oaXVyZ7umAGSVOaZfnfzGuSvRomWxmAs4EAkVjnThu7i8X\noO7ZX3R3n2GY1lplGKJyDDKVWEJG/VfBjh+1t+/czAZENPKeh2DFcHZp2bpTmmXT\npuVErluS6hbRQU10hmqUollFRCR+0EW7zbBprgfNrDn6t8swqneso9K4gBYztM9Z\nBn6MYR/UZ4fHp1AiwO/kpyaWjxK3HxuFYqXvlcjtYX74Wrd7hDXpis2iegg8lRji\neCQupLnnAgMBAAECggEAF4uJOueLrcRa0ifluGiifMj3GGso4zHgYP0if5h23pEX\nt67yVYXOS2hJ5ojLhYo0eY4SekGm1dyrB+BnPsDVVMoEl1F3k55P7CzGXPA/4TtT\nq+bV8t91e78d4SOE1JK8UtE3UrdUivuKEH6lTB2wFyZr+7baBX+ut3x2tt9vvug3\ngwTK0OTf9I1ngEAzQKK0DKtChusUB9spxXNVANsZoGbCdZWdeIN4CPCRsEqG2uhK\nJLewhYepvjod2wm/5QxpdKKgo0LyQJJp817MNZHYyOwsySxfOInXATarrUsblFCA\nzFfU6xHnIda3qMmhMsScIqQ8FTbj81PcGWWCH2H5AQKBgQD/VkMGY5i67e1rvbwQ\n/XX8nNyRK7HSGQSAf169NCoFJBeLi9olk+3BqTZhjurSN6XkmneuKqvoE3wXrNuD\nwXk3jAB/yb+TpdJWnsF9N91k1FYK8MKFYMvN3bjYbuPUW+I+yOxpcjXjuz9PTOdF\n3KuQ+Dqp9CXWFqXkcPzQqtbpWQKBgQC5Hc5Z10cK/C7wXbh898xOSUXUWVk8cAg0\nYZqAUbK9flSpcW3CpUOw3xGgHrHP5/KEBQRTsHZ3HOiI59kqt9dxbtk83FhGU5UJ\n8wR8tCUwn4dD/IPR9XfXrp6DSr+4P2vrX2dUvi/MFe+9pynyyvEFG8cch66/o9D/\nwkznNuUVPwKBgQDeY0tNLUHAzamTxVUflyJEOnsBFYVy78c0A7uIHv7aK202ZUBC\nqmzR14c9wTRUk5MxYDgMwa2oHBBgrnUidEgXUSC+LAFnn21rdCoh3Z4+S5IFRVym\nvn/DdfGg0DQuqTiMZoNB8+9rwZKKhviHqILlaM3vaG3r4R3rsV0AgUtdQQKBgFp6\nVwFSV0bnO4oARMvP0evxpE/F2/fOSjRQAFP3moVD2d13s04PuKYaYWMBnacgl0gv\nq428Eirl1kIUD/DxKjwnEcbNa9fzwkS6otbQtdyuHE7+fO+CKrEgiBljz5EeboD8\ngGTLEFGP5z2rFrW0u1jj2s33A1Jnnx9iuHPKQO3BAoGBAJRhxD0U9HHYMcXShmDJ\nrumxfqqXxcU8jc9r4A8sVWqw2F20MuZ1xO6TTEsoCvCOXRG89GgB43Vwjl/9Cuoc\napVcBgPQEvKyO1IxQTfUmtRcQlsYAKcOmkTrTd25Xf9oKUVJF4P5+L/Y5jy34w81\nlaI4zFunhABekRkWwOCZF6Vl\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-f1l55@cervi-test-project.iam.gserviceaccount.com",
+  "client_id": "104123365725273022082",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-f1l55%40cervi-test-project.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

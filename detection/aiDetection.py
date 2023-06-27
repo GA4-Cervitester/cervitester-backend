@@ -9,11 +9,13 @@ import tensorflow as tf
 import numpy as np
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
-from .firebase import storage
-import mediafire_dl
+from .firebase import storage, firebase, firebaseConfig
+from firebase_admin import credentials, initialize_app
+from google.cloud import storage
 
 
 def loadModel():
+
     # version="0.0.0"
     # version = "pap"
     # if not os.path.exists(f"models/{version}.h5"):
@@ -72,6 +74,17 @@ def runDetection(testType):
         return [normal_count, rounded_ratio, abnormal_count]
     elif (testType == "1"):
         img = manual_preprocess()
+        # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'cervi-test-project-87ebf43d4e28.json'
+        # cred = credentials.Certificate('cervi-test-project-87ebf43d4e28.json')
+        # initialize_app(cred)
+        # storage_client = storage.Client()
+        # bucket_name = 'cervi-test-project.appspot.com'
+        # model_file_name = 'colpo.h5'
+        # local_model_path = 'models/colpo.h5'
+        # bucket = storage_client.bucket(bucket_name)
+        # blob = bucket.blob(model_file_name)
+        # blob.download_to_filename(local_model_path)
+        # colpo_model = load_model(f'models/colpo.h5')
         model = load_model(f'models/colpo.h5')
         prediction = model.predict(img)
         return prediction[0]
