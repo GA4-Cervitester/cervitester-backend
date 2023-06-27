@@ -1,3 +1,4 @@
+-f https://download.pytorch.org/whl/torch_stable.html
 asgiref==3.4.1
 autopep8
 CacheControl==0.12.10
@@ -50,7 +51,10 @@ wincertstore==0.2
 gunicorn
 django-heroku
 tensorflow-cpu==2.8.0
+django-anymail
 pillow
 django-cors-headers
 django-sendgrid-v5
 mediafire-dl @ git+https://github.com/Juvenal-Yescas/mediafire-dl@c73fe1e76632e6f9f51ed8167b4562ab1cfe03f7
+torch==1.8.1+cpu 
+torchvision==0.9.1+cpu
