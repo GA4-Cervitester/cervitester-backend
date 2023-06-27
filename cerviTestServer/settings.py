@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = 'django-insecure-+l+nul&4+o6&oog=k3y^qb(!8&^2)qx9t1_(1uqd75cz@+fav6'
 
-DEBUG = True
+DEBUG = False
 if os.getcwd() == '/app':
     DEBUG = False
 
